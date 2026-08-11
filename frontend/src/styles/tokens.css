@@ -1,0 +1,356 @@
+/* ==========================================================================
+   CoinCard — design tokens
+   --------------------------------------------------------------------------
+   The single source of truth for colour, spacing, type, radius, elevation and
+   motion. Components reference tokens only; no component file contains a raw
+   hex value or a magic pixel number.
+
+   Two layers on purpose:
+     1. PRIMITIVES  (--violet-500, --space-4)  — the raw scale, theme-agnostic.
+     2. SEMANTIC    (--color-accent, --surface-raised) — what components use.
+
+   Only the semantic layer is re-pointed per theme, so adding a theme means
+   remapping ~30 aliases rather than auditing every component.
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------- colour
+     Primitive ramps. Named by hue + weight, never by role. */
+
+  --violet-50:  #EEEBFF;
+  --violet-100: #DDD6FE;
+  --violet-200: #C4B5FD;
+  --violet-300: #A78BFA;
+  --violet-400: #8B7CF8;
+  --violet-500: #6D5EF7;   /* brand */
+  --violet-600: #5B47E0;
+  --violet-700: #4A37BF;
+  --violet-800: #392A94;
+  --violet-900: #251C63;
+
+  --gold-300: #FBD87C;
+  --gold-400: #F5C453;
+  --gold-500: #F0B429;     /* coins */
+  --gold-600: #D19A16;
+  --gold-700: #A97A0F;
+
+  --emerald-400: #34D399;
+  --emerald-500: #10B981;
+  --emerald-600: #059669;
+
+  --amber-400: #FBBF24;
+  --amber-500: #F59E0B;
+  --amber-600: #D97706;
+
+  --red-400: #F87171;
+  --red-500: #EF4444;
+  --red-600: #DC2626;
+
+  --sky-400: #38BDF8;
+  --sky-500: #0EA5E9;
+
+  /* Neutral ramp, very slightly blue so surfaces read as "product" not "paper" */
+  --neutral-0:   #FFFFFF;
+  --neutral-25:  #FBFCFE;
+  --neutral-50:  #F5F7FA;
+  --neutral-100: #EDF0F5;
+  --neutral-200: #DFE4EC;
+  --neutral-300: #C6CEDB;
+  --neutral-400: #98A3B5;
+  --neutral-500: #6B7688;
+  --neutral-600: #4C5567;
+  --neutral-700: #363E4E;
+  --neutral-800: #242A38;
+  --neutral-850: #1B2029;
+  --neutral-900: #141821;
+  --neutral-950: #0B0E14;
+
+  /* ------------------------------------------------------------- typography
+     One family, two roles. Tabular figures matter more than a display face in
+     a money table — columns of digits must align to the pixel. */
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+
+  /* Modular scale, ratio ~1.2, rounded to whole/half pixels for crisp text. */
+  --text-2xs:  0.6875rem;  /* 11px — table meta, chips */
+  --text-xs:   0.75rem;    /* 12px */
+  --text-sm:   0.8125rem;  /* 13px — table body */
+  --text-base: 0.875rem;   /* 14px — UI default */
+  --text-md:   1rem;       /* 16px */
+  --text-lg:   1.125rem;   /* 18px */
+  --text-xl:   1.375rem;   /* 22px */
+  --text-2xl:  1.75rem;    /* 28px — stat values */
+  --text-3xl:  2.25rem;    /* 36px — coin balance */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-caps: 0.08em;
+
+  /* ---------------------------------------------------------------- space
+     4px base. Every gap, pad and inset in the app comes from this scale. */
+
+  --space-0: 0;
+  --space-1: 0.25rem;   /*  4 */
+  --space-2: 0.5rem;    /*  8 */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.25rem;   /* 20 */
+  --space-6: 1.5rem;    /* 24 */
+  --space-7: 2rem;      /* 32 */
+  --space-8: 2.5rem;    /* 40 */
+  --space-9: 3rem;      /* 48 */
+  --space-10: 4rem;     /* 64 */
+
+  /* --------------------------------------------------------------- radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 999px;
+
+  /* ---------------------------------------------------------------- motion
+     Short and eased. Anything longer than 240ms in a data app feels sluggish. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 260ms;
+
+  /* ----------------------------------------------------------------- misc */
+  --border-width: 1px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --header-height: 60px;
+  --content-max: 1440px;
+  --z-sticky: 10;
+  --z-header: 40;
+  --z-drawer: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+}
+
+/* ==========================================================================
+   Semantic layer — LIGHT (default)
+   ========================================================================== */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-app: var(--neutral-50);
+  --bg-app-gradient:
+    radial-gradient(1100px 480px at 12% -12%, rgba(109, 94, 247, 0.10), transparent 65%),
+    radial-gradient(900px 420px at 92% -6%, rgba(240, 180, 41, 0.09), transparent 62%);
+
+  --surface: var(--neutral-0);
+  --surface-raised: var(--neutral-0);
+  --surface-sunken: var(--neutral-50);
+  --surface-hover: var(--neutral-50);
+  --surface-active: var(--neutral-100);
+  --surface-overlay: rgba(20, 24, 33, 0.45);
+
+  --border: var(--neutral-200);
+  --border-strong: var(--neutral-300);
+  --border-subtle: var(--neutral-100);
+
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-600);
+  --text-tertiary: var(--neutral-500);
+  --text-inverse: var(--neutral-0);
+  --text-on-accent: var(--neutral-0);
+
+  --accent: var(--violet-500);
+  --accent-hover: var(--violet-600);
+  --accent-active: var(--violet-700);
+  --accent-soft: var(--violet-50);
+  --accent-soft-border: var(--violet-200);
+  --accent-text: var(--violet-600);
+
+  --coin: var(--gold-600);
+  --coin-bright: var(--gold-500);
+  --coin-soft: #FFF6E0;
+  --coin-soft-border: #F5DFA8;
+
+  --success: var(--emerald-600);
+  --success-soft: #E3F9F0;
+  --success-border: #A7E7CE;
+
+  --warning: var(--amber-600);
+  --warning-soft: #FEF3DC;
+  --warning-border: #F7DCA4;
+
+  --danger: var(--red-600);
+  --danger-soft: #FDE9E9;
+  --danger-border: #F6BDBD;
+
+  --info: var(--sky-500);
+  --info-soft: #E2F4FE;
+  --info-border: #A9DDF7;
+
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08), 0 2px 4px rgba(16, 24, 40, 0.04);
+  --shadow-lg: 0 12px 28px rgba(16, 24, 40, 0.12), 0 4px 8px rgba(16, 24, 40, 0.05);
+  --shadow-xl: 0 24px 56px rgba(16, 24, 40, 0.16);
+  --shadow-focus: 0 0 0 var(--focus-ring-width) var(--surface),
+                  0 0 0 calc(var(--focus-ring-width) + 2px) var(--accent);
+
+  --skeleton-base: var(--neutral-100);
+  --skeleton-shine: var(--neutral-0);
+  --scrollbar-thumb: var(--neutral-300);
+}
+
+/* ==========================================================================
+   Semantic layer — DARK
+   Not an inversion: surfaces get *lighter* as they rise, borders get softer,
+   and shadows are replaced by contrast because shadows read poorly on dark.
+   ========================================================================== */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-app: var(--neutral-950);
+  --bg-app-gradient:
+    radial-gradient(1100px 480px at 12% -12%, rgba(109, 94, 247, 0.20), transparent 65%),
+    radial-gradient(900px 420px at 92% -6%, rgba(240, 180, 41, 0.10), transparent 62%);
+
+  --surface: var(--neutral-900);
+  --surface-raised: var(--neutral-850);
+  --surface-sunken: #090C11;
+  --surface-hover: rgba(255, 255, 255, 0.04);
+  --surface-active: rgba(255, 255, 255, 0.07);
+  --surface-overlay: rgba(5, 7, 11, 0.72);
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #ECEFF5;
+  --text-secondary: #A3ACBD;
+  --text-tertiary: #7A8496;
+  --text-inverse: var(--neutral-950);
+  --text-on-accent: #FFFFFF;
+
+  --accent: var(--violet-400);
+  --accent-hover: var(--violet-300);
+  --accent-active: var(--violet-500);
+  --accent-soft: rgba(109, 94, 247, 0.16);
+  --accent-soft-border: rgba(139, 124, 248, 0.34);
+  --accent-text: var(--violet-300);
+
+  --coin: var(--gold-400);
+  --coin-bright: var(--gold-300);
+  --coin-soft: rgba(240, 180, 41, 0.14);
+  --coin-soft-border: rgba(240, 180, 41, 0.32);
+
+  --success: var(--emerald-400);
+  --success-soft: rgba(16, 185, 129, 0.14);
+  --success-border: rgba(52, 211, 153, 0.32);
+
+  --warning: var(--amber-400);
+  --warning-soft: rgba(245, 158, 11, 0.14);
+  --warning-border: rgba(251, 191, 36, 0.32);
+
+  --danger: var(--red-400);
+  --danger-soft: rgba(239, 68, 68, 0.14);
+  --danger-border: rgba(248, 113, 113, 0.32);
+
+  --info: var(--sky-400);
+  --info-soft: rgba(14, 165, 233, 0.14);
+  --info-border: rgba(56, 189, 248, 0.32);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 28px 64px rgba(0, 0, 0, 0.7);
+  --shadow-focus: 0 0 0 var(--focus-ring-width) var(--surface),
+                  0 0 0 calc(var(--focus-ring-width) + 2px) var(--accent);
+
+  --skeleton-base: rgba(255, 255, 255, 0.05);
+  --skeleton-shine: rgba(255, 255, 255, 0.11);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.16);
+}
+
+/* Respect the OS when the user has not chosen explicitly. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --bg-app: var(--neutral-950);
+    --bg-app-gradient:
+      radial-gradient(1100px 480px at 12% -12%, rgba(109, 94, 247, 0.20), transparent 65%),
+      radial-gradient(900px 420px at 92% -6%, rgba(240, 180, 41, 0.10), transparent 62%);
+
+    --surface: var(--neutral-900);
+    --surface-raised: var(--neutral-850);
+    --surface-sunken: #090C11;
+    --surface-hover: rgba(255, 255, 255, 0.04);
+    --surface-active: rgba(255, 255, 255, 0.07);
+    --surface-overlay: rgba(5, 7, 11, 0.72);
+
+    --border: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --border-subtle: rgba(255, 255, 255, 0.05);
+
+    --text-primary: #ECEFF5;
+    --text-secondary: #A3ACBD;
+    --text-tertiary: #7A8496;
+    --text-inverse: var(--neutral-950);
+    --text-on-accent: #FFFFFF;
+
+    --accent: var(--violet-400);
+    --accent-hover: var(--violet-300);
+    --accent-active: var(--violet-500);
+    --accent-soft: rgba(109, 94, 247, 0.16);
+    --accent-soft-border: rgba(139, 124, 248, 0.34);
+    --accent-text: var(--violet-300);
+
+    --coin: var(--gold-400);
+    --coin-bright: var(--gold-300);
+    --coin-soft: rgba(240, 180, 41, 0.14);
+    --coin-soft-border: rgba(240, 180, 41, 0.32);
+
+    --success: var(--emerald-400);
+    --success-soft: rgba(16, 185, 129, 0.14);
+    --success-border: rgba(52, 211, 153, 0.32);
+
+    --warning: var(--amber-400);
+    --warning-soft: rgba(245, 158, 11, 0.14);
+    --warning-border: rgba(251, 191, 36, 0.32);
+
+    --danger: var(--red-400);
+    --danger-soft: rgba(239, 68, 68, 0.14);
+    --danger-border: rgba(248, 113, 113, 0.32);
+
+    --info: var(--sky-400);
+    --info-soft: rgba(14, 165, 233, 0.14);
+    --info-border: rgba(56, 189, 248, 0.32);
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 28px 64px rgba(0, 0, 0, 0.7);
+
+    --skeleton-base: rgba(255, 255, 255, 0.05);
+    --skeleton-shine: rgba(255, 255, 255, 0.11);
+    --scrollbar-thumb: rgba(255, 255, 255, 0.16);
+  }
+}

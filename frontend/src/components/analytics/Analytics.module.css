@@ -1,0 +1,266 @@
+/* ========================================================== stat tiles */
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thin accent rule at the top of each tile, tinted per metric. */
+.stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--stat-accent, var(--accent));
+  opacity: 0.8;
+}
+
+.statLabel {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+
+.statValue {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statMeta {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.statCoin .statValue { color: var(--coin); }
+
+/* ============================================================== charts */
+
+.chartGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 1080px) {
+  .chartGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chartBox {
+  width: 100%;
+  height: 280px;
+  /* Recharts' ResponsiveContainer measures its parent; without an explicit
+     min-width:0 inside a grid track the chart can refuse to shrink and force
+     the whole page into a horizontal scroll. */
+  min-width: 0;
+}
+
+.chartHint {
+  font-size: var(--text-2xs);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ------------------------------------------------------------- donut */
+
+.donutWrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .donutWrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+.donutChart {
+  position: relative;
+  height: 236px;
+  min-width: 0;
+}
+
+/* Total in the hole of the donut. pointer-events:none so it never blocks a
+   slice click. */
+.donutCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  gap: 2px;
+}
+
+.donutCenterLabel {
+  font-size: var(--text-2xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  font-weight: var(--weight-semibold);
+}
+
+.donutCenterValue {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.slice {
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  outline: none;
+}
+
+/* --------------------------------------------------------- legend */
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  max-height: 236px;
+  overflow-y: auto;
+}
+
+.legendItem {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  width: 100%;
+  text-align: left;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.legendItem:hover {
+  background-color: var(--surface-hover);
+}
+
+.legendActive {
+  background-color: var(--accent-soft);
+}
+
+.legendSwatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legendName {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legendActive .legendName {
+  color: var(--accent-text);
+  font-weight: var(--weight-medium);
+}
+
+.legendValue {
+  font-size: var(--text-2xs);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ========================================================== tooltip */
+
+.tooltip {
+  background-color: var(--surface-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+  font-size: var(--text-xs);
+  min-width: 150px;
+}
+
+.tooltipTitle {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tooltipRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  color: var(--text-secondary);
+  padding: 1px 0;
+}
+
+.tooltipValue {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  font-weight: var(--weight-medium);
+}
+
+.tooltipHint {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: var(--border-width) solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-size: var(--text-2xs);
+}
+
+/* ========================================================= empty state */
+
+.chartEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 236px;
+  color: var(--text-tertiary);
+  font-size: var(--text-base);
+  text-align: center;
+  padding: var(--space-4);
+}
+
+.dimmed {
+  opacity: 0.55;
+  transition: opacity var(--duration-base) var(--ease-out);
+}

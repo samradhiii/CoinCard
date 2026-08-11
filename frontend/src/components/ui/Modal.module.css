@@ -1,0 +1,176 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background-color: var(--surface-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: overlayIn var(--duration-base) var(--ease-out);
+  /* Long modal content scrolls the overlay, not the locked page behind it. */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.overlayDrawer {
+  align-items: stretch;
+  justify-content: flex-end;
+  padding: 0;
+  z-index: var(--z-drawer);
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------------------------------------------------------------- panel */
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  animation: panelIn var(--duration-slow) var(--ease-spring);
+  max-height: calc(100dvh - var(--space-8));
+  margin: auto;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sm { max-width: 400px; }
+.md { max-width: 520px; }
+.lg { max-width: 720px; }
+
+/* ---------------------------------------------------------------- drawer */
+
+.drawer {
+  max-width: 480px;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  border-right: none;
+  animation: drawerIn var(--duration-slow) var(--ease-out);
+}
+
+@keyframes drawerIn {
+  from { transform: translateX(24px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Full-bleed sheet on phones: a 480px drawer on a 360px screen is a modal
+   pretending to be a drawer. */
+@media (max-width: 560px) {
+  .overlayDrawer {
+    align-items: flex-end;
+  }
+
+  .drawer {
+    max-width: 100%;
+    height: auto;
+    max-height: 92dvh;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-right: var(--border-width) solid var(--border);
+    animation: sheetIn var(--duration-slow) var(--ease-out);
+  }
+
+  @keyframes sheetIn {
+    from { transform: translateY(28px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* ---------------------------------------------------------------- header */
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-bottom: var(--border-width) solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.description {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.close:hover {
+  background-color: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+/* ------------------------------------------------------------------ body */
+
+.body {
+  padding: var(--space-5);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-top: var(--border-width) solid var(--border-subtle);
+  background-color: var(--surface-sunken);
+  flex-shrink: 0;
+}
+
+/* Buttons go full width and reverse on phones so the primary action sits under
+   the thumb rather than at the far edge. */
+@media (max-width: 420px) {
+  .footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}

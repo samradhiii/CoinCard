@@ -1,0 +1,221 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) 0 var(--space-6);
+  text-align: center;
+  border-bottom: var(--border-width) solid var(--border-subtle);
+  margin-bottom: var(--space-5);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  background-color: color-mix(in srgb, var(--cat-color) 16%, transparent);
+  color: var(--cat-color);
+  border: var(--border-width) solid color-mix(in srgb, var(--cat-color) 28%, transparent);
+  margin-bottom: var(--space-1);
+}
+
+[data-theme="dark"] .avatar {
+  color: color-mix(in srgb, var(--cat-color) 76%, white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .avatar {
+    color: color-mix(in srgb, var(--cat-color) 76%, white);
+  }
+}
+
+.amount {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.amountRefund { color: var(--success); }
+.amountOutlier { color: var(--warning); }
+
+.merchant {
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.when {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.heroBadges {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+/* ============================================================ detail rows */
+
+.section {
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  margin-bottom: var(--space-3);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(96px, 38%) 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.term {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.value {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  margin: 0;
+  text-align: right;
+  word-break: break-word;
+  min-width: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.coinValue {
+  color: var(--coin);
+  font-weight: var(--weight-semibold);
+}
+
+/* ============================================================ data notes */
+
+.note {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-2);
+}
+
+.noteInfo {
+  background-color: var(--info-soft);
+  border: var(--border-width) solid var(--info-border);
+  color: var(--text-secondary);
+}
+
+.noteWarn {
+  background-color: var(--warning-soft);
+  border: var(--border-width) solid var(--warning-border);
+  color: var(--text-secondary);
+}
+
+.noteIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.noteInfo .noteIcon { color: var(--info); }
+.noteWarn .noteIcon { color: var(--warning); }
+
+.noteTitle {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ========================================================= collision list */
+
+.collision {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-sunken);
+  margin-bottom: var(--space-2);
+  width: 100%;
+  text-align: left;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.collision:hover {
+  border-color: var(--border-strong);
+}
+
+.collisionMain {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.collisionMerchant {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.collisionMeta {
+  font-size: var(--text-2xs);
+  color: var(--text-tertiary);
+}
+
+.collisionAmount {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+}

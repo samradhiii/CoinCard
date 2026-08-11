@@ -1,0 +1,175 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+
+.hint {
+  font-size: var(--text-2xs);
+  color: var(--text-tertiary);
+}
+
+.error {
+  font-size: var(--text-2xs);
+  color: var(--danger);
+}
+
+/* ---------------------------------------------------------------- control */
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  background-color: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.control:hover {
+  border-color: var(--border-strong);
+}
+
+/* Focus is styled on the wrapper, not the <input>, so the ring encloses the
+   leading icon and the clear button too. */
+.control:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding-inline: var(--space-3);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  border-radius: inherit;
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--text-tertiary);
+}
+
+.withLeading {
+  padding-inline-start: var(--space-1);
+}
+
+.leading,
+.trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--space-2);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-inline-end: var(--space-2);
+  border-radius: var(--radius-full);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.clear:hover {
+  background-color: var(--surface-active);
+  color: var(--text-primary);
+}
+
+/* Live spinner inside the search box while a debounced query is in flight. */
+.pending {
+  width: 13px;
+  height: 13px;
+  margin-inline-end: var(--space-3);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--accent);
+  animation: spin 700ms linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----------------------------------------------------------------- select */
+
+.select {
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding-inline: var(--space-3) var(--space-7);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: inherit;
+}
+
+.selectChevron {
+  position: absolute;
+  right: var(--space-3);
+  pointer-events: none;
+  color: var(--text-tertiary);
+  display: flex;
+}
+
+/* Native option lists inherit the OS surface, not ours — force the app's
+   colours so the dropdown does not flash white in dark mode. */
+.select option {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+/* Native date inputs render a light calendar glyph; invert it in dark mode. */
+[data-theme="dark"] .input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.75);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.75);
+  }
+}
+
+/* Number inputs: hide spinners, they are useless for currency entry. */
+.input[type="number"]::-webkit-outer-spin-button,
+.input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}

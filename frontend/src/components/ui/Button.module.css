@@ -1,0 +1,149 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  border: var(--border-width) solid transparent;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+  /* Stops a double-tap on mobile from zooming instead of pressing. */
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.button:active:not(:disabled):not([aria-busy="true"]) {
+  transform: translateY(1px);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Busy is not disabled: the button keeps its colour and stays focusable so a
+   screen reader can still announce it, but pointer events are ignored. */
+.button[aria-busy="true"] {
+  cursor: progress;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ sizes */
+
+.sm {
+  height: 30px;
+  padding-inline: var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.md {
+  height: 36px;
+  padding-inline: var(--space-4);
+  font-size: var(--text-base);
+}
+
+.lg {
+  height: 44px;
+  padding-inline: var(--space-6);
+  font-size: var(--text-md);
+}
+
+/* Square, for icon-only buttons. Width is locked to height so the icon
+   optically centres instead of drifting. */
+.iconOnly.sm { width: 30px; padding-inline: 0; }
+.iconOnly.md { width: 36px; padding-inline: 0; }
+.iconOnly.lg { width: 44px; padding-inline: 0; }
+
+.block {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------- variants */
+
+.primary {
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-xs);
+}
+
+.primary:hover:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--accent-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.primary:active:not(:disabled) {
+  background-color: var(--accent-active);
+}
+
+.secondary {
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+.secondary:hover:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+
+.ghost:hover:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.danger {
+  background-color: var(--danger);
+  color: #fff;
+}
+
+.danger:hover:not(:disabled):not([aria-busy="true"]) {
+  filter: brightness(1.08);
+}
+
+.coin {
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+  color: #2A1D00;
+  font-weight: var(--weight-semibold);
+  box-shadow: var(--shadow-sm);
+}
+
+.coin:hover:not(:disabled):not([aria-busy="true"]) {
+  filter: brightness(1.06);
+  box-shadow: var(--shadow-md);
+}
+
+/* ------------------------------------------------------------- spinner */
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: spin 620ms linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Keep the label in the DOM while busy so the button does not change width
+   mid-click — a resizing button under the cursor feels broken. */
+.busyLabel {
+  opacity: 0.75;
+}

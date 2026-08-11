@@ -1,0 +1,43 @@
+# env
+.env
+.env.local
+.env*.local
+
+# local tooling / secrets
+.claude/
+.pg18/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# node / next
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# misc
+coverage/
+.coverage
+htmlcov/
+
+# Assignment brief, and the duplicate of the dataset left at the repo root.
+# The working copy lives at data/transactions.json and IS committed.
+DigitalAlpha-Full-Stack-Assignment.pdf
+/transactions.json

@@ -1,0 +1,88 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  line-height: 1.6;
+  white-space: nowrap;
+  border: var(--border-width) solid transparent;
+  letter-spacing: var(--tracking-normal);
+}
+
+.neutral {
+  background-color: var(--surface-sunken);
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+
+.success {
+  background-color: var(--success-soft);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+
+.warning {
+  background-color: var(--warning-soft);
+  color: var(--warning);
+  border-color: var(--warning-border);
+}
+
+.danger {
+  background-color: var(--danger-soft);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+
+.info {
+  background-color: var(--info-soft);
+  color: var(--info);
+  border-color: var(--info-border);
+}
+
+.accent {
+  background-color: var(--accent-soft);
+  color: var(--accent-text);
+  border-color: var(--accent-soft-border);
+}
+
+.coin {
+  background-color: var(--coin-soft);
+  color: var(--coin);
+  border-color: var(--coin-soft-border);
+}
+
+/* A filled dot carrying the status colour. Paired with a text label so status
+   is never communicated by colour alone. */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------- category badge
+   Tinted from the category's own colour, passed in as a CSS variable so one
+   rule covers all 10 categories instead of 10 near-identical classes. */
+
+.category {
+  background-color: color-mix(in srgb, var(--cat-color) 14%, transparent);
+  color: var(--cat-color);
+  border-color: color-mix(in srgb, var(--cat-color) 30%, transparent);
+}
+
+/* In dark themes the raw hue can fall below contrast; lighten it slightly. */
+[data-theme="dark"] .category {
+  color: color-mix(in srgb, var(--cat-color) 78%, white);
+  background-color: color-mix(in srgb, var(--cat-color) 18%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .category {
+    color: color-mix(in srgb, var(--cat-color) 78%, white);
+    background-color: color-mix(in srgb, var(--cat-color) 18%, transparent);
+  }
+}

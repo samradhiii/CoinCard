@@ -1,0 +1,1 @@
+﻿# Public assets live here. Kept so the Docker build's COPY of ./public succeeds.

@@ -1,0 +1,197 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.tableCard {
+  overflow: visible;
+}
+
+/* ==================================================== data-quality banner */
+
+.qualityBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--info-soft);
+  border: var(--border-width) solid var(--info-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: var(--leading-snug);
+}
+
+.qualityIcon {
+  color: var(--info);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.qualityBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.qualityTitle {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.qualityList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin-top: var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.qualityItem {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.qualityCount {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.qualityDismiss {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.qualityDismiss:hover {
+  background-color: color-mix(in srgb, var(--info) 14%, transparent);
+  color: var(--text-primary);
+}
+
+/* ========================================================== rewards page */
+
+.rewardsLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .rewardsLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rewardsAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-5));
+}
+
+@media (max-width: 900px) {
+  .rewardsAside {
+    position: static;
+  }
+}
+
+.rewardsMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.sectionHeading {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.sectionSub {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ============================================================ chart row */
+
+.chartGrid {
+  display: grid;
+  /* Donut is squarer, trend needs the width — 5:7 rather than an even split. */
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 1080px) {
+  .chartGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====================================================== activity list */
+
+.activityRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+
+.activityRow:last-child {
+  border-bottom: none;
+}
+
+.activityMain {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.activityTitle {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activityMeta {
+  font-size: var(--text-2xs);
+  color: var(--text-tertiary);
+}
+
+.activityDelta {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.deltaPositive { color: var(--success); }
+.deltaNegative { color: var(--danger); }
+
+.activityEmpty {
+  padding: var(--space-5);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}

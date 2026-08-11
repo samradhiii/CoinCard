@@ -1,0 +1,72 @@
+name: coincard
+
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: coincard-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-coincard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-coincard}
+      POSTGRES_DB: ${POSTGRES_DB:-coincard}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-coincard} -d ${POSTGRES_DB:-coincard}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # One-shot: creates the schema and loads data/transactions.json.
+  # Run with:  docker compose run --rm seed
+  seed:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: coincard-seed
+    profiles: ["tools"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-coincard}:${POSTGRES_PASSWORD:-coincard}@db:5432/${POSTGRES_DB:-coincard}
+    command: ["python", "-m", "app.db.seed", "--file", "/data/transactions.json", "--reset"]
+
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: coincard-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-coincard}:${POSTGRES_PASSWORD:-coincard}@db:5432/${POSTGRES_DB:-coincard}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000}
+    container_name: coincard-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000}
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+
+volumes:
+  pgdata:
